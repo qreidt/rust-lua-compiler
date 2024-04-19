@@ -223,6 +223,7 @@ impl Lexer {
     }
 }
 
+#[derive(Clone)]
 pub struct Token {
     pub text: String,
     pub ttype: TokenType
@@ -239,7 +240,7 @@ use strum_macros::EnumString;
 #[derive(PartialEq)]
 #[derive(EnumString)]
 #[derive(Debug)]
-#[derive(Clone)]
+#[derive(Clone, Copy)]
 pub enum TokenType {
     Unknown = -2,
     EOF = -1,
