@@ -1,9 +1,12 @@
 mod lexer;
 mod parser;
+mod emitter;
 
 use lexer::Lexer;
 use parser::Parser;
 use std::fs;
+
+use crate::emitter::Emitter;
 
 fn main() -> () {
     // let source = "+- */ >>= = !=";
@@ -15,8 +18,11 @@ fn main() -> () {
         .expect("Should have been able to read the file");
 
     let lexer = Lexer::new(contents.chars().collect());
-    let mut parser = Parser::new(lexer);
+    let mut emitter = Emitter::new("./out/out.c");
+    let mut parser = Parser::new(lexer, &mut emitter);
 
     parser.program();
-    println!("Parsing Complete.")
+    println!("Parsing Complete.");
+    emitter.write_file();
+    println!("Compiling complete.");
 }
